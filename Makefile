@@ -1,6 +1,6 @@
 VCS_REF := $(shell git rev-parse --short HEAD)
 BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
-IMAGE_NAME := mrkaran/eks-gitops:1.0.0
+IMAGE_NAME := mrkaran/eks-gitops:1.2.1
 
 build:
 	@docker build \

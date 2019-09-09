@@ -15,7 +15,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories 
 # Download kubectl
 RUN apk update && \ 
-    apk add --no-cache curl ca-certificates && \
+    apk add --no-cache curl git ca-certificates && \
     curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 # Install kubectl (stable, latest version)
 RUN mv kubectl /usr/local/bin \
@@ -30,6 +30,18 @@ RUN chmod +x /usr/local/bin/aws-iam-authenticator
 ARG SOPS_RELEASE_URL=https://github.com/mozilla/sops/releases/download/3.3.1/sops-3.3.1.linux
 RUN curl -o /usr/local/bin/sops $SOPS_RELEASE_URL
 RUN chmod +x /usr/local/bin/sops
+# Install kubeval
+ARG KUBEVAL_RELEASE_URL=https://github.com/instrumenta/kubeval/releases/download/0.14.0/kubeval-linux-amd64.tar.gz
+RUN curl -sL $KUBEVAL_RELEASE_URL | tar xz && mv kubeval /usr/local/bin/
+RUN chmod +x /usr/local/bin/kubeval
+# Install kustomize
+RUN curl -s https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest |\
+  grep browser_download |\
+  grep linux |\
+  cut -d '"' -f 4 |\
+  xargs curl -O -L
+RUN mv kustomize_*_linux_amd64 /usr/local/bin/kustomize
+RUN chmod +x /usr/local/bin/kustomize
 # Add binaries to PATH
 ENV PATH /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/user/.local/bin
 # Create a default user
