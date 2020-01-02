@@ -1,6 +1,6 @@
 # eks-gitops
 
-`docker pull mrkaran/eks-gitops:1.0.0`
+`docker pull mrkaran/eks-gitops:latest`
 
 An alpine based image which containts `kubectl`, `aws`, `aws-iam-authenticator` and `sops`. Useful if you are running an EKS Cluster
 and want to use these tools in a Continuos Deployment environment. It additionally configures `KUBECONFIG` to use

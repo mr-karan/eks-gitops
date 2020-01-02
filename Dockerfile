@@ -10,7 +10,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.docker.dockerfile="/Dockerfile" \
     org.label-schema.name="eks-kubectl" \
     org.label-schema.description="Kubectl configured with AWS tools like aws-cli and aws-iam-authenticator. Useful for CI/CD Environments" \
-    maintainer="karansharma1295@gmail.com"
+    maintainer="hello@mrkaran.dev"
 # Use HTTPS repo for downloading Alpine packages
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories 
 # Download kubectl
@@ -23,24 +23,16 @@ RUN mv kubectl /usr/local/bin \
 # Install awscli
 RUN pip install awscli
 # Install aws-iam-authenticator (URL Specified via build arg)
-ARG AWS_IAM_AUTHENTICATOR_URL=https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/aws-iam-authenticator
+ARG AWS_IAM_AUTHENTICATOR_URL=https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator
 RUN curl -o /usr/local/bin/aws-iam-authenticator $AWS_IAM_AUTHENTICATOR_URL
 RUN chmod +x /usr/local/bin/aws-iam-authenticator
-# Install sops
-ARG SOPS_RELEASE_URL=https://github.com/mozilla/sops/releases/download/3.3.1/sops-3.3.1.linux
-RUN curl -o /usr/local/bin/sops $SOPS_RELEASE_URL
-RUN chmod +x /usr/local/bin/sops
 # Install kubeval
 ARG KUBEVAL_RELEASE_URL=https://github.com/instrumenta/kubeval/releases/download/0.14.0/kubeval-linux-amd64.tar.gz
 RUN curl -sL $KUBEVAL_RELEASE_URL | tar xz && mv kubeval /usr/local/bin/
 RUN chmod +x /usr/local/bin/kubeval
 # Install kustomize
-RUN curl -s https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest |\
-  grep browser_download |\
-  grep linux |\
-  cut -d '"' -f 4 |\
-  xargs curl -O -L
-RUN mv kustomize_*_linux_amd64 /usr/local/bin/kustomize
+ARG KUSTOMIZE_RELEASE_URL=https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.5.3/kustomize_v3.5.3_linux_amd64.tar.gz
+RUN curl -sL $KUSTOMIZE_RELEASE_URL | tar xz && mv kustomize /usr/local/bin/
 RUN chmod +x /usr/local/bin/kustomize
 # Add binaries to PATH
 ENV PATH /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/user/.local/bin
