@@ -1,7 +1,7 @@
 VCS_REF := $(shell git rev-parse --short HEAD)
 BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 IMAGE_NAME := mrkaran/eks-gitops
-CURRENT_BUILD_TAG := 1.3.2
+CURRENT_BUILD_TAG := 1.3.3
 LATEST_TAG:= latest
 
 build:
