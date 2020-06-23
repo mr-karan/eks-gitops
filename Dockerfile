@@ -15,7 +15,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories 
 # Download kubectl
 RUN apk update && \ 
-    apk add --no-cache curl git ca-certificates && \
+    apk add --no-cache curl git ca-certificates gettext make && \
     curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 # Install kubectl (stable, latest version)
 RUN mv kubectl /usr/local/bin \
@@ -34,6 +34,16 @@ RUN chmod +x /usr/local/bin/kubeval
 ARG KUSTOMIZE_RELEASE_URL=https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.5.3/kustomize_v3.5.3_linux_amd64.tar.gz
 RUN curl -sL $KUSTOMIZE_RELEASE_URL | tar xz && mv kustomize /usr/local/bin/
 RUN chmod +x /usr/local/bin/kustomize
+# Install kubekutr
+ARG KUBEKUTR_RELEASE_URL=https://github.com/mr-karan/kubekutr/releases/download/v0.8.8/kubekutr_0.8.8_linux_amd64.tar.gz
+RUN curl -sL $KUBEKUTR_RELEASE_URL | tar xz && mv kubekutr /usr/local/bin/
+RUN chmod +x /usr/local/bin/kubekutr
+# Install promtool
+# ARG PROMETHEUS_VERSION=2.15.2
+# RUN wget -O prometheus.tar.gz https://github.com/prometheus/prometheus/releases/download/v$PROMETHEUS_VERSION/prometheus-$PROMETHEUS_VERSION.linux-amd64.tar.gz && \
+#     mkdir /prometheus && \
+#     tar -xvf prometheus.tar.gz -C /prometheus --strip-components 1 --exclude */promtool && \
+#     rm prometheus.tar.gz
 # Add binaries to PATH
 ENV PATH /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/user/.local/bin
 # Create a default user
