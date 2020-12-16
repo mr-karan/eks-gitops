@@ -35,7 +35,7 @@ ARG KUSTOMIZE_RELEASE_URL=https://github.com/kubernetes-sigs/kustomize/releases/
 RUN curl -sL $KUSTOMIZE_RELEASE_URL | tar xz && mv kustomize /usr/local/bin/
 RUN chmod +x /usr/local/bin/kustomize
 # Install kubekutr
-ARG KUBEKUTR_RELEASE_URL=https://github.com/mr-karan/kubekutr/releases/download/v0.9.0/kubekutr_0.9.0_linux_amd64.tar.gz
+ARG KUBEKUTR_RELEASE_URL=https://github.com/mr-karan/kubekutr/releases/download/v0.9.2/kubekutr_0.9.2_linux_amd64.tar.gz
 RUN curl -sL $KUBEKUTR_RELEASE_URL | tar xz && mv kubekutr /usr/local/bin/
 RUN chmod +x /usr/local/bin/kubekutr
 # Install promtool
