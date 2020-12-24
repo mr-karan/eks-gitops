@@ -38,6 +38,9 @@ RUN chmod +x /usr/local/bin/kustomize
 ARG KUBEKUTR_RELEASE_URL=https://github.com/mr-karan/kubekutr/releases/download/v0.9.2/kubekutr_0.9.2_linux_amd64.tar.gz
 RUN curl -sL $KUBEKUTR_RELEASE_URL | tar xz && mv kubekutr /usr/local/bin/
 RUN chmod +x /usr/local/bin/kubekutr
+ARG TERRAFORM_RELEASE_URL=https://releases.hashicorp.com/terraform/0.14.3/terraform_0.14.3_linux_amd64.zip
+RUN curl -sLo terraform.zip $TERRAFORM_RELEASE_URL && unzip terraform.zip && rm terraform.zip \
+    && mv terraform /usr/local/bin && chmod +x /usr/local/bin/terraform
 # Install promtool
 # ARG PROMETHEUS_VERSION=2.15.2
 # RUN wget -O prometheus.tar.gz https://github.com/prometheus/prometheus/releases/download/v$PROMETHEUS_VERSION/prometheus-$PROMETHEUS_VERSION.linux-amd64.tar.gz && \
