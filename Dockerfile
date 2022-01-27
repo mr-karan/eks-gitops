@@ -53,6 +53,7 @@ USER eksuser
 WORKDIR /home/eksuser
 # Use aws eks to update your kubectl config based on the IAM role the container assumes
 COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 # Default command to run when container spawns
 CMD ["kubectl", "help"]
