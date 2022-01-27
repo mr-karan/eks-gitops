@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 if ! which aws > /dev/null; then
         echo "Can't find 'aws cli' executable. Aborted."

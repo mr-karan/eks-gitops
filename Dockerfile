@@ -13,7 +13,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
     maintainer="hello@mrkaran.dev"
 # Download kubectl
 RUN apt update && \ 
-    apt install -y curl git ca-certificates gettext make unzip && \
+    apt install -y curl git ca-certificates gettext make unzip bash && \
     curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 # Install kubectl (stable, latest version)
 RUN mv kubectl /usr/local/bin \
